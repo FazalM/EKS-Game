@@ -1,1 +1,4 @@
 .sass-cache/
+.terraform/
+*tfstate
+*tfstate.backup
