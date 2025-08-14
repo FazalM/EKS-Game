@@ -33,3 +33,17 @@ resource "aws_dynamodb_table" "terraform_lock" {
     type = "S"
   }
 }
+
+resource "aws_ecr_repository" "my_eks_app_repo" {
+  name                 = "my-eks-app-repo"
+  image_tag_mutability = "MUTABLE"
+  force_delete = true
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_route53_zone" "public" {
+  name = "myapp.com"          # replace with your domain
+}

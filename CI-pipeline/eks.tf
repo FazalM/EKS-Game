@@ -1,21 +1,27 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "20.8.4"
+  version = "21.0.9"
 
-  cluster_name    = "my-eks-cluster"
-  cluster_version = "1.30"
+  name               = "my-eks-cluster"
+  kubernetes_version = "1.30"
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  vpc_id     = data.terraform_remote_state.bootstrap.outputs.vpc_id
+  subnet_ids = data.terraform_remote_state.bootstrap.outputs.private_subnet_ids
 
-  cluster_iam_role_name = aws_iam_role.eks_cluster_role.name
+  create_iam_role           = false
+  iam_role_arn              = local.cluster_role_arn
+  cluster_security_group_id = local.cluster_sg_id
 
   eks_managed_node_groups = {
     default = {
-      instance_types = ["t3.medium"]
-      desired_size   = 2
-      max_size       = 4
-      min_size       = 1
+      instance_types               = ["t3.medium"]
+      desired_size                 = 1
+      max_size                     = 4
+      min_size                     = 1
+      iam_role_arn                 = local.node_role_arn
+      additional_security_group_ids = [local.node_sg_id]
     }
   }
+
+  depends_on = [module.eks]
 }
