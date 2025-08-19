@@ -1,10 +1,10 @@
 # Fetch kubeconfig to use kubernetes provider
 data "aws_eks_cluster" "cluster" {
-  name = module.eks.name
+  name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.name
+  name = module.eks.cluster_id
 }
 
 provider "kubernetes" {
@@ -33,5 +33,18 @@ resource "kubernetes_config_map" "aws_auth" {
         groups   = ["system:masters"]
       }
     ])
+
+    #mapUsers = yamlencode([
+    #    {
+    #      userarn  = "arn:aws:iam::123456789012:user/dev-user1"
+    #      username = "dev-user1"
+    #      groups   = ["system:masters"]
+    #    },
+    #    {
+    #      userarn  = "arn:aws:iam::123456789012:user/qa-user2"
+    #      username = "qa-user2"
+    #      groups   = ["view"]
+    #    }
+    #  ])
   }
 }

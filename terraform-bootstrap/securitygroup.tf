@@ -58,30 +58,25 @@ resource "aws_security_group" "elb-securitygroup" {
 # Security Group for EKS Cluster
 # -------------------------------
 resource "aws_security_group" "eks_cluster_sg" {
-  name        = "eks-cluster-sg"
-  description = "EKS cluster security group"
-  vpc_id      = data.terraform_remote_state.bootstrap.outputs.vpc_id
+  name   = "eks-cluster-sg"
+  vpc_id = data.terraform_remote_state.bootstrap.outputs.vpc_id
 
-  # Allow all traffic from worker nodes
-  ingress {
-    description      = "Allow worker nodes to communicate with cluster"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.eks_node_sg.id]
-  }
-
-  # Allow cluster to communicate with nodes (all traffic)
+  # Allow cluster to talk anywhere (nodes) if needed
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
 
-  tags = {
-    Name = "eks-cluster-sg"
-  }
+resource "aws_security_group_rule" "cluster_to_nodes" {
+  type                     = "ingress"
+  from_port                = 10250
+  to_port                  = 10250
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks_node_sg.id
+  source_security_group_id = aws_security_group.eks_cluster_sg.id
 }
 
 # -------------------------------
@@ -92,25 +87,7 @@ resource "aws_security_group" "eks_node_sg" {
   description = "EKS worker node security group"
   vpc_id      = data.terraform_remote_state.bootstrap.outputs.vpc_id
 
-  # Allow nodes to communicate with each other
-  ingress {
-    description     = "Allow nodes to communicate with each other"
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    self            = true
-  }
-
-  # Allow nodes to communicate with the cluster control plane
-  ingress {
-    description      = "Allow nodes to reach cluster API"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.eks_cluster_sg.id]
-  }
-
-  # Allow internet access for nodes (optional, for pulling images)
+  # Allow internet access for nodes for pulling images
   egress {
     from_port   = 0
     to_port     = 0
@@ -121,4 +98,22 @@ resource "aws_security_group" "eks_node_sg" {
   tags = {
     Name = "eks-node-sg"
   }
+}
+
+resource "aws_security_group_rule" "node_to_cluster_api" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks_cluster_sg.id
+  source_security_group_id = aws_security_group.eks_node_sg.id
+}
+
+resource "aws_security_group_rule" "node_to_node" {
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 65535
+  protocol          = "-1"
+  security_group_id = aws_security_group.eks_node_sg.id
+  self              = true
 }

@@ -22,5 +22,5 @@ variable "AMIS" {
 variable "bucket_name" {
   description = "The name of the S3 bucket to store Terraform state"
   type        = string
-  default = "fm-my-unique-terraform-boot-game-bucket-2025"
+  default     = "fm-my-unique-terraform-boot-game-bucket-2025"
 }

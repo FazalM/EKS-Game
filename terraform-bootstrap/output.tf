@@ -45,3 +45,13 @@ output "node_instance_profile_name" {
   value       = aws_iam_instance_profile.eks_node_instance_profile.name
   description = "The name of the EKS node instance profile"
 }
+
+output "eks_cluster_sg_id" {
+  value       = aws_security_group.eks_cluster_sg.id
+  description = "The security group ID for the EKS cluster control plane"
+}
+
+output "eks_node_sg_id" {
+  value       = aws_security_group.eks_node_sg.id
+  description = "The security group ID for the EKS worker nodes"
+}

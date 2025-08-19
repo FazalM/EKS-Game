@@ -45,5 +45,5 @@ resource "aws_ecr_repository" "my_eks_app_repo" {
 }
 
 resource "aws_route53_zone" "public" {
-  name = "myapp.com"          # replace with your domain
+  name = "superstareducation.co.uk"          # replace with your domain
 }
