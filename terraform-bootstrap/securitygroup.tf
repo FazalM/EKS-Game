@@ -59,7 +59,7 @@ resource "aws_security_group" "elb-securitygroup" {
 # -------------------------------
 resource "aws_security_group" "eks_cluster_sg" {
   name   = "eks-cluster-sg"
-  vpc_id = data.terraform_remote_state.bootstrap.outputs.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   # Allow cluster to talk anywhere (nodes) if needed
   egress {
@@ -85,7 +85,7 @@ resource "aws_security_group_rule" "cluster_to_nodes" {
 resource "aws_security_group" "eks_node_sg" {
   name        = "eks-node-sg"
   description = "EKS worker node security group"
-  vpc_id      = data.terraform_remote_state.bootstrap.outputs.vpc_id
+  vpc_id      = module.vpc.vpc_id
 
   # Allow internet access for nodes for pulling images
   egress {

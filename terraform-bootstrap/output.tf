@@ -11,6 +11,10 @@ output "private_subnet_ids" {
   value = module.vpc.private_subnets
 }
 
+output "public_subnet_ids" {
+  value = module.vpc.public_subnets
+}
+
 output "route53_zone_id" {
   value       = aws_route53_zone.public.zone_id
   description = "The ID of the Route 53 hosted zone"
