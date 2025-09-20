@@ -6,8 +6,14 @@ resource "helm_release" "prometheus" {
   version    = "65.1.0"
   create_namespace = true
 
-  set {
-    name  = "grafana.adminPassword"
-    value = "Password123" # Terraform-managed password
-  }
+  set = [
+    {
+      name  = "grafana.adminPassword"
+      value = "MyStrongPassword123"
+    }
+  ]
+
+  depends_on = [
+    module.eks
+  ]
 }

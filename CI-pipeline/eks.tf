@@ -19,6 +19,8 @@ module "eks" {
   # Optional
   endpoint_public_access = true
 
+  endpoint_public_access_cidrs = ["90.194.192.250/32"]
+
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
 
@@ -33,9 +35,9 @@ module "eks" {
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = ["t3.medium"]
 
-      min_size     = 2
-      max_size     = 10
-      desired_size = 2
+      min_size     = 1
+      max_size     = 2
+      desired_size = 1
     }
   }
 
