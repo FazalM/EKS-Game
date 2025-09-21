@@ -5,6 +5,10 @@ on:
     branches: [ "staging" ]
     paths: ['CD-pipeline/**']
 
+permissions:
+  id-token: write     # required for OIDC to work
+  contents: read      # required for checkout if you add it later
+
 jobs:
   bootstrap-argocd:
     runs-on: ubuntu-latest
