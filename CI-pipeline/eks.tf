@@ -45,4 +45,19 @@ module "eks" {
     Environment = "dev"
     Terraform   = "true"
   }
+  # I created this so the cluster allows run permission outside the master account
+  access_entries = {
+    github_actions = {
+      principal_arn = aws_iam_role.github_actions_role.arn
+
+      policy_associations = {
+        github_actions_admin = {
+          policy_arn = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+          access_scope = {
+            type = "cluster"
+          }
+        }
+      }
+    }
+  }
 }
