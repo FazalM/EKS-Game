@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/FazalM/EKS-Game.git   # my repo
     targetRevision: staging                           # branch
-    path: manifests                                   # my folder in repo where k8s yaml lives
+    path: manifest                                 # my folder in repo where k8s yaml lives
   destination:
     server: https://kubernetes.default.svc
     namespace: default
