@@ -16,11 +16,11 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-region: eu-east-1
+          aws-region: us-east-1
           role-to-assume: arn:aws:iam::662348578823:role/GitHubActionsRole
 
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --region eu-east-1 --name my-cluster
+        run: aws eks update-kubeconfig --region us-east-1 --name my-cluster
 
       - name: Install Helm
         uses: azure/setup-helm@v4
