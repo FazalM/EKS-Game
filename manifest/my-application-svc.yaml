@@ -8,5 +8,5 @@ spec:
     app: my-application
   ports:
     - port: 80          # service port
-      targetPort: 8080  # containerPort in your deployment
+      targetPort: 80  # containerPort in your deployment
   type: ClusterIP
