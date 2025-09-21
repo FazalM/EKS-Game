@@ -19,7 +19,7 @@ module "eks" {
   # Optional
   endpoint_public_access = true
 
-  endpoint_public_access_cidrs = ["90.194.192.250/32"]
+  endpoint_public_access_cidrs = ["0.0.0.0/0"] #change to personal once testing is complete
 
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
