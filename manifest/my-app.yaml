@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-application
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-application
+  template:
+    metadata:
+      labels:
+        app: my-application
+    spec:
+      serviceAccountName: ecr-sa   
+      containers:
+      - name: my-application
+        image: 662348578823.dkr.ecr.us-east-1.amazonaws.com/my-eks-app-repo:latest
+        ports:
+        - containerPort: 8080

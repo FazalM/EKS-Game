@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-application-svc
+  namespace: default
+spec:
+  selector:
+    app: my-application
+  ports:
+    - port: 80          # service port
+      targetPort: 8080  # containerPort in your deployment
+  type: ClusterIP

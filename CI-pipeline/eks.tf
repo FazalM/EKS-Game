@@ -23,6 +23,7 @@ module "eks" {
 
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
+  enable_irsa = true #gives the cluster OIDC capability
 
   vpc_id     = data.terraform_remote_state.bootstrap.outputs.vpc_id
   subnet_ids = data.terraform_remote_state.bootstrap.outputs.private_subnet_ids
