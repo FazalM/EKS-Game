@@ -46,7 +46,23 @@ resource "aws_iam_role_policy_attachment" "eks_service" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
 
-resource "aws_iam_role_policy_attachment" "eks_readonly" {
-  role       = aws_iam_role.github_actions_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSReadOnlyAccess"
+resource "aws_iam_policy" "eks_describe" {
+  name        = "GitHubActionsEKSDescribeCluster"
+  description = "Allow GitHub Actions role to describe my-cluster"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["eks:DescribeCluster"]
+        Resource = "arn:aws:eks:us-east-1:662348578823:cluster/my-cluster"
+      }
+    ]
+  })
 }
+
+resource "aws_iam_role_policy_attachment" "eks_describe_attach" {
+  role       = aws_iam_role.github_actions_role.name
+  policy_arn = aws_iam_policy.eks_describe.arn
+}
+
