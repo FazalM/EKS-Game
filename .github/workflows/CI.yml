@@ -3,6 +3,7 @@ name: Infra + Docker Pipeline
 on:
   push:
     branches: [ "staging" ]
+    paths: ['CI-pipeline/**']
 
 jobs:
   terraform:
