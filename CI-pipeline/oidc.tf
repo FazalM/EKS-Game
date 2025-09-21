@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::123456789012:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = [data.terraform_remote_state.bootstrap.outputs.github_oidc_provider_arn]
     }
 
     actions = ["sts:AssumeRoleWithWebIdentity"]

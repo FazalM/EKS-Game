@@ -59,3 +59,7 @@ output "eks_node_sg_id" {
   value       = aws_security_group.eks_node_sg.id
   description = "The security group ID for the EKS worker nodes"
 }
+
+output "github_oidc_provider_arn" {
+  value = aws_iam_openid_connect_provider.github.arn
+}
