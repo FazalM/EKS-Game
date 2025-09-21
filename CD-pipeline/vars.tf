@@ -15,3 +15,4 @@ variable "bucket_name" {
   type        = string
   default     = "fm-my-unique-terraform-boot-game-bucket-2025"
 }
+#

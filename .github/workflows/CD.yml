@@ -13,7 +13,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: eu-east-1
-          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsRole
+          role-to-assume: arn:aws:iam::662348578823:role/GitHubActionsRole
 
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --region eu-east-1 --name my-cluster
@@ -32,4 +32,4 @@ jobs:
         run: |
           kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
           helm install argocd argo/argo-cd -n argocd
-          
+
