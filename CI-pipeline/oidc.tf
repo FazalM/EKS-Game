@@ -14,6 +14,12 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
       variable = "token.actions.githubusercontent.com:sub"
       values   = ["repo:Fazalm/EKS-Game:*"]
     }
+    # Require GitHub OIDC token audience to be sts.amazonaws.com
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
   }
 }
 
