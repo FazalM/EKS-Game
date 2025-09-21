@@ -13,6 +13,17 @@ jobs:
   bootstrap-argocd:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 🔹 Debug: print the OIDC token claims
+      - name: Print OIDC token claims
+        run: |
+          OIDC_TOKEN=$(curl -sSL -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com" | jq -r .value)
+          echo "Decoded claims:"
+          echo $OIDC_TOKEN | cut -d. -f2 | base64 -d | jq
+          
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
