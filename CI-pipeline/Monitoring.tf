@@ -6,6 +6,10 @@ resource "helm_release" "prometheus" {
   version    = "65.1.0"
   create_namespace = true
 
+  replace          = true
+  force_update     = true
+  recreate_pods    = true
+
   set = [
     {
       name  = "grafana.adminPassword"

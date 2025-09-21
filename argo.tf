@@ -1,3 +1,4 @@
+
 resource "helm_release" "argocd" {
   name       = "argocd"
   namespace  = "argocd"
