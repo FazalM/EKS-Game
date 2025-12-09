@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - superstareducation.co.uk
-      secretName: superstareducation-co-uk-tls
+        - app.superstareducation.co.uk
+      secretName: app-superstareducation-co-uk-tls
   rules:
-    - host: superstareducation.co.uk
+    - host: app.superstareducation.co.uk
       http:
         paths:
           - path: /
