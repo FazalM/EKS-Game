@@ -1,8 +1,3 @@
-locals {
-  grafana_admin_user     = trimspace(file("${path.module}/../user.txt"))
-  grafana_admin_password = trimspace(file("${path.module}/../password.txt")) 
-}
-
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   namespace  = "monitoring"
@@ -18,11 +13,11 @@ resource "helm_release" "prometheus" {
   set = [
     {
       name  = "grafana.adminUser"
-      value = local.grafana_admin_user
+      value = var.grafana_admin_user
     },
     {
       name  = "grafana.adminPassword"
-      value = local.grafana_admin_password
+      value = var.grafana_admin_password
     }
   ]
 

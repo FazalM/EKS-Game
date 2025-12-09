@@ -24,3 +24,13 @@ variable "bucket_name" {
   type        = string
   default     = "fm-my-unique-terraform-boot-game-bucket-2025"
 }
+
+variable "grafana_admin_user" {
+  type      = string
+  sensitive = true
+}
+
+variable "grafana_admin_password" {
+  type      = string
+  sensitive = true
+}

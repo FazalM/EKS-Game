@@ -11,6 +11,9 @@ jobs:
     defaults:
       run:
         working-directory: CI-pipeline   # 👈 all run commands will run in /CI-pipeline
+    env:
+      TF_VAR_grafana_admin_user: ${{ secrets.GRAFANA_ADMIN_USER }}
+      TF_VAR_grafana_admin_password: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
