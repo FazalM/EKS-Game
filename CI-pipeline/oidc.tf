@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:FazalM/EKS-Game:ref:refs/heads/staging"]
+      values   = ["repo:FazalM/EKS-Game:ref:refs/heads/staging", "repo:FazalM/EKS-Game:ref:refs/heads/main"]
     }
     # Require GitHub OIDC token audience to be sts.amazonaws.com
     condition {

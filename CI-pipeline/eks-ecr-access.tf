@@ -14,6 +14,7 @@ resource "aws_iam_role" "ecr_irsa_role" {
           StringEquals = {
             # system:serviceaccount:<namespace>:<serviceaccount-name>
             "${module.eks.oidc_provider}:sub" = "system:serviceaccount:default:ecr-sa"
+            #this give the ecr-sa manifest file pod permission
           }
         }
       }
