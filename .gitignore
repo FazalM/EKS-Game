@@ -2,3 +2,5 @@
 .terraform/
 *tfstate
 *tfstate.backup
+user.txt
+password.txt
