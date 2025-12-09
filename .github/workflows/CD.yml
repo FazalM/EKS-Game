@@ -46,7 +46,10 @@ jobs:
       - name: Install ArgoCD
         run: |
           kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-          helm install argocd argo/argo-cd -n argocd
+          helm upgrade --install argocd argo/argo-cd \
+            --namespace argocd \
+            --create-namespace \
+            --version 7.7.3
 
       - name: Run ArgoCD as app
         run: |
@@ -56,6 +59,9 @@ jobs:
       - name: Install Argo Rollouts
         run: |
           kubectl create namespace argo-rollouts --dry-run=client -o yaml | kubectl apply -f -
-          helm install argo-rollouts argo/argo-rollouts -n argo-rollouts
+          helm upgrade --install argo-rollouts argo/argo-rollouts \
+            --namespace argo-rollouts \
+            --create-namespace
+
 
 
