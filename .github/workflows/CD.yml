@@ -53,7 +53,7 @@ jobs:
 
       - name: Run ArgoCD as app
         run: |
-          kubectl apply -f argocd-app.yaml -n argocd
+          kubectl apply -f manifest/argocd-app.yaml -n argocd
 
       # Argo Rollouts
       - name: Install Argo Rollouts
