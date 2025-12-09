@@ -55,9 +55,11 @@ jobs:
         run: |
           kubectl apply -f manifest/argocd-app.yaml -n argocd
 
-      - name: Run Ingress-nginx as app
+      - name: Run all apps 
         run: |
-          kubectl apply -f manifest/argo-ingress-app.yaml -n argocd
+          kubectl apply -f manifest-apps/argo-ingress-app.yaml -n argocd
+          kubectl apply -f manifest-apps/cert-manager.yaml -n argocd
+          kubectl apply -f manifest-apps/external-dns.yaml -n argocd
 
       # Argo Rollouts
       - name: Install Argo Rollouts
